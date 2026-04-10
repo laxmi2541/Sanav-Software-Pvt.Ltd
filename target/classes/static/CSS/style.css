@@ -1,0 +1,391 @@
+/* --- GLOBAL RESET --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins, sans-serif;
+}
+
+/* --- BODY BACKGROUND (gradient purple) --- */
+body {
+    background: linear-gradient(90deg, #3c1a8a, #5f2eea);
+    color: white;
+}
+
+
+/* --- NAVIGATION --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px;
+    align-items: center;
+    position: sticky;
+    top: 0;
+}
+.nav-links li {
+    list-style: none;
+    display: inline-block;
+    margin-left: 30px;
+}
+.nav-links li a {
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    transition: 0.3s;
+}
+.nav-links li a:hover {
+    color: #00f5ff;
+}
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+/* --- HERO --- */
+.hero-section {
+    display: flex;
+    padding: 80px 60px;
+}
+
+.hero-left {
+    width: 50%;
+}
+.hero-left .years {
+    background: rgba(255,255,255,0.15);
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+.hero-left h1 {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+.hero-left h1 span {
+    color: #6aaaff;
+}
+.hero-left p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+/* BUTTONS */
+.btn {
+    padding: 14px 28px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 6px;
+    margin-right: 15px;
+}
+.primary {
+    background: #0066ff;
+    color: white;
+}
+.primary:hover {
+    background: #0052cc;
+}
+.secondary {
+    background: transparent;
+    border: 2px solid white;
+}
+.secondary:hover {
+    background: white;
+    color: #3c1a8a;
+}
+
+
+/* SERVICE CARDS (Hero Right) */
+.hero-right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+.service-card {
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 15px 0;
+    transition: 0.3s;
+}
+.service-card:hover {
+    background: rgba(255,255,255,0.3);
+    cursor: pointer;
+}
+.service-card h3 {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+.service-card p {
+    font-size: 15px;
+}
+/* GLOBAL STYLES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #FAFBFC;
+    color: #222831;
+}
+
+/* NAVIGATION */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 60px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+}
+
+.navbar .logo {
+    font-weight: bold;
+    font-size: 18px;
+    color: #0058ff;
+}
+
+.menu a {
+    margin-left: 30px;
+    text-decoration: none;
+    color: #333;
+    font-size: 15px;
+}
+.menu a:hover {
+    color: #0058ff;
+}
+
+/* ABOUT SECTION */
+.about-section {
+    padding: 50px 60px;
+    text-align: center;
+}
+
+.about-section h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 17px;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+/* ABOUT CONTENT */
+.about-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-text {
+    width: 48%;
+    text-align: left;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.left-text p {
+    margin-bottom: 15px;
+}
+
+.company-info {
+    border: 1px solid #e0e0e0;
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-top: 25px;
+}
+
+/* IMAGE & FLOATING BADGE */
+.right-image-container {
+    width: 50%;
+    position: relative;
+}
+
+.right-image-container img {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.floating-badge {
+    position: absolute;
+    bottom: -15px;
+    left: -5px;
+    background: #0066ff;
+    color: white;
+    padding: 18px 22px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.floating-badge h2 {
+    font-size: 28px;
+    margin-bottom: 3px;
+}
+.floating-badge p {
+    font-size: 14px;
+}
+
+/* FEATURE CARDS SECTION */
+.features-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 60px;
+}
+
+.feature-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    width: 23%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    text-align: left;
+}
+
+.feature-card h3 {
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.feature-card p {
+    font-size: 14px;
+    color: #555;
+    margin-top: 8px;
+}
+
+/* ICON COLORS */
+.icon {
+    font-size: 30px;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+.blue-bg { background: #E6EEFF; color: #0066ff;}
+.purple-bg { background: #F3E8FF; color: #A55BFF;}
+.green-bg { background: #E6F9EE; color: #00A859;}
+.orange-bg { background: #FFF4E5; color: #FF7700;}
+
+.green-text {
+    color: #00a859;
+    font-weight: 600;
+}
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #1a1a1a;
+}
+.container {
+    width: 90%;
+    margin: auto;
+}
+
+/* Navbar */
+.navbar {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+.navbar .logo {
+    color: #0057ff;
+}
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+.nav-toggle {
+    display: none;
+}
+
+/* Services Section */
+.services-section {
+    padding: 60px 0;
+    text-align: center;
+}
+.services-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+.services-section p {
+    color: #555;
+    margin-bottom: 40px;
+}
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+.card .icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.web { background: #0057ff; }
+.custom { background: #a335ff; }
+.security { background: #ff2e2e; }
+.hardware { background: #00b341; }
+.training { background: #ff6b00; }
+.consultancy { background: #5e00ff; }
+.card h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+/* Text Section */
+.text-section {
+    padding: 50px 0;
+}
+.text-section h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+.text-section h3 {
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+.text-section ul {
+    margin: 10px 0 20px 20px;
+}
+
+/* Footer */
+footer {
+    background: #f8f8f8;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #444;
+}

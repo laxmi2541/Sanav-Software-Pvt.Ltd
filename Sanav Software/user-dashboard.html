@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard | SANAV SOFTWARE</title>
+    <link rel="stylesheet" href="font-awesome/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0d3b66;
+            --accent-gold: #c9a86a;
+            --dark-bg: #0a1929;
+            --card-bg: #132f4c;
+            --text-light: #f0f7ff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .dashboard-container {
+            background: var(--card-bg);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 { color: var(--accent-gold); margin-bottom: 20px; }
+        p { color: #b0c4de; font-size: 1.1rem; line-height: 1.6; }
+
+        .btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: var(--accent-gold);
+            color: var(--dark-bg);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(201, 168, 106, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <i class="fas fa-user-circle fa-5x" style="color: var(--accent-gold); margin-bottom: 20px;"></i>
+        <h1>Welcome to Your Dashboard</h1>
+        <p>Hello <span id="userName">User</span>! You have successfully logged into the SANAV SOFTWARE portal. Your personalized dashboard is currently being prepared with your profile details and services.</p>
+        <a href="index.html" class="btn">Back to Home</a>
+        <a href="#" class="btn" style="background: rgba(255,255,255,0.1); color: white; margin-left: 10px;" onclick="logout()">Logout</a>
+    </div>
+
+    <script>
+        // Load user data
+        const userData = JSON.parse(localStorage.getItem('user'));
+        if (userData) {
+            document.getElementById('userName').innerText = userData.name;
+        } else {
+            window.location.href = 'login.html';
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
+
+

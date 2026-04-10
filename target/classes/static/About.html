@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | SANAV SOFTWARE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap">
+    <style>
+        :root {
+            --primary-blue: #0b2545;
+            --secondary-blue: #123a63;
+            --accent-blue: #1a4f85;
+            --accent-gold: #d4af378f;
+            --secondary-gold: #c9a24dbc;
+            --tertiary-gold: #b8962e;
+            --olive-green: #8a9a5b;
+            --light-olive: #a3b18a;
+            --dark-bg: #0a1929;
+            --card-bg: #132f4c;
+            --light-card: #1e3a5f;
+            --text-light: #f0f7ff;
+            --text-gray: #b0c4de;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(13, 59, 102, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(201, 168, 106, 0.05) 0%, transparent 50%),
+                var(--dark-bg);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--accent-gold);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(13, 59, 102, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--accent-gold);
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo Design */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-light);
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            color: var(--accent-gold);
+            font-style: italic;
+        }
+
+        /* Navigation - Clean, no button styles */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-gold);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 150px 0 80px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 0;
+            background: linear-gradient(135deg,
+                rgba(10, 25, 41, 0.95) 0%,
+                rgba(13, 59, 102, 0.85) 100%);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(29, 79, 145, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(201, 168, 106, 0.2) 0%, transparent 50%);
+            z-index: -1;
+            animation: gradientFloat 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes gradientFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(20px, -20px) scale(1.1);
+            }
+            66% {
+                transform: translate(-15px, 15px) scale(0.9);
+            }
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text-light) 30%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out 0.8s forwards;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 80px 0;
+        }
+
+        /* About Intro - Improved */
+        .about-intro {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .about-intro.animate {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .about-text h2 {
+            font-size: 2.4rem;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .about-text h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-gold), var(--olive-green));
+            border-radius: 2px;
+        }
+
+        .about-text p {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .about-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px var(--shadow-color);
+            position: relative;
+            border: 3px solid var(--accent-gold);
+            transition: transform 0.5s ease;
+            height: 380px;
+        }
+
+        .about-image:hover {
+            transform: translateY(-10px);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.8s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* OUR JOURNEY SECTION - REDESIGNED */
+        .journey-section {
+            margin-bottom: 100px;
+            padding: 70px 0;
+            background: linear-gradient(135deg, rgba(19, 47, 76, 0.8) 0%, rgba(30, 58, 95, 0.8) 100%);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .journey-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--accent-gold), var(--olive-green));
+        }
+
+        .journey-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .journey-title h2 {
+            font-size: 2.8rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .journey-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-gold), var(--olive-green));
+            border-radius: 2px;
+        }
+
+        .journey-title p {
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        /* Timeline Container */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        /* Center Line */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-gold), var(--olive-green));
+            border-radius: 2px;
+        }
+
+        /* Timeline Item */
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 20px 40px;
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .timeline-item.animate {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 80px;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 80px;
+        }
+
+        /* Timeline Dot */
+        .timeline-dot {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-gold);
+            border: 4px solid var(--dark-bg);
+            border-radius: 50%;
+            top: 30px;
+            right: -12px;
+            z-index: 2;
+            box-shadow: 0 0 0 4px var(--accent-gold);
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -12px;
+            right: auto;
+        }
+
+        /* Timeline Content */
+        .timeline-content {
+            background: var(--light-card);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-gold);
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-gold), var(--olive-green));
+            border-radius: 15px 15px 0 0;
+        }
+
+        .timeline-year {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-gold), var(--olive-green));
+            color: var(--dark-bg);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(201, 168, 106, 0.3);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .timeline-content p {
+            color: var(--text-gray);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            color: var(--accent-gold);
+            font-size: 1.8rem;
+            opacity: 0.8;
+        }
+
+        .timeline-item:nth-child(even) .timeline-icon {
+            right: auto;
+            left: 25px;
+        }
+
+        /* Mission Section */
+        .mission-section {
+            background: linear-gradient(135deg,
+                rgba(19, 47, 76, 0.9) 0%,
+                rgba(30, 58, 95, 0.9) 100%);
+            padding: 70px 0;
+            border-radius: 15px;
+            margin-bottom: 80px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(201, 168, 106, 0.2);
+        }
+
+        .mission-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-gold), var(--olive-green));
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-gold), var(--olive-green));
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .mission-content {
+            max-width: 800px;
+            margin: 0 auto 50px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 35px;
+            background: rgba(30, 58, 95, 0.5);
+            border-radius: 12px;
+            border-left: 5px solid var(--accent-gold);
+            position: relative;
+        }
+
+        .mission-content::before,
+        .mission-content::after {
+            content: '"';
+            font-size: 3.5rem;
+            color: var(--accent-gold);
+            position: absolute;
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+
+        .mission-content::before {
+            top: 10px;
+            left: 15px;
+        }
+
+        .mission-content::after {
+            bottom: 10px;
+            right: 15px;
+        }
+
+        /* Values Section */
+        .values-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .value-card {
+            background: var(--light-card);
+            border-radius: 12px;
+            padding: 35px 25px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .value-card.animate {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-gold);
+        }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-gold), var(--olive-green));
+            transform: scaleX(0);
+            transition: transform 0.4s;
+            transform-origin: left;
+        }
+
+        .value-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .value-icon {
+            font-size: 2.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            transition: transform 0.4s, color 0.4s;
+        }
+
+        .value-card:hover .value-icon {
+            transform: scale(1.1);
+        }
+
+        .value-card h3 {
+            font-size: 1.4rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .value-card p {
+            color: var(--text-gray);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* Registration Section */
+        .registration-section {
+            margin-bottom: 80px;
+        }
+
+        .registration-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .registration-card {
+            background: linear-gradient(135deg, var(--light-card), var(--card-bg));
+            border-radius: 12px;
+            padding: 35px 25px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .registration-card.animate {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .registration-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .registration-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-gold), var(--olive-green));
+        }
+
+        .registration-card h3 {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .registration-card .value {
+            font-size: 2.2rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .registration-card .status {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--olive-green), var(--light-olive));
+            color: var(--dark-bg);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        /* Detailed About */
+        .detailed-about {
+            background: linear-gradient(135deg, var(--light-card), var(--card-bg));
+            border-radius: 15px;
+            padding: 50px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            margin-bottom: 80px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .detailed-about.animate {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .detailed-about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-gold), var(--olive-green));
+        }
+
+        .detailed-about h2 {
+            font-size: 2.2rem;
+            color: var(--text-light);
+            margin-bottom: 35px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 18px;
+            line-height: 1.3;
+        }
+
+        .detailed-about h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-gold), var(--olive-green));
+            border-radius: 2px;
+        }
+
+        .detailed-about p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-gray);
+            margin-bottom: 25px;
+            padding: 18px;
+            background: rgba(30, 58, 95, 0.3);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-gold);
+            transition: transform 0.3s;
+        }
+
+        .detailed-about p:hover {
+            transform: translateX(8px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0c2138 0%, #0a1929 100%);
+            padding: 50px 0 25px;
+            border-top: 3px solid var(--accent-gold);
+            position: relative;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 35px;
+            margin-bottom: 30px;
+            align-items: start;
+        }
+
+        .footer-section {
+            padding: 0;
+            text-align: left;
+        }
+
+        .company-info .logo-text {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-gold);
+            font-weight: 700;
+            display: block;
+        }
+
+        .company-info p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 35px;
+            height: 2px;
+            background: var(--accent-gold);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            padding: 4px 0;
+        }
+
+        .footer-links a i {
+            margin-right: 10px;
+            color: var(--accent-gold);
+            width: 18px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-gold);
+            transform: translateX(5px);
+        }
+
+        .contact-info {
+            padding: 0;
+            margin: 0;
+        }
+
+        .contact-info p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contact-info i {
+            color: var(--accent-gold);
+            margin-right: 12px;
+            margin-top: 3px;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            width: 18px;
+            text-align: center;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(201, 168, 106, 0.2);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 5px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+
+            .footer-content {
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .about-intro {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .values-container,
+            .registration-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 35px;
+            }
+
+            .footer-section {
+                margin-bottom: 10px;
+            }
+
+            /* Timeline responsive */
+            .timeline::before {
+                left: 40px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                padding-left: 80px !important;
+                padding-right: 20px !important;
+            }
+
+            .timeline-dot {
+                left: 28px !important;
+                right: auto !important;
+            }
+
+            .timeline-icon {
+                left: 25px !important;
+                right: auto !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                padding-top: 20px;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .hero-section {
+                padding: 130px 0 60px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.3rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+                padding: 0 15px;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .journey-title h2 {
+                font-size: 2.2rem;
+            }
+
+            .detailed-about {
+                padding: 30px 20px;
+            }
+
+            .value-card,
+            .registration-card {
+                padding: 30px 20px;
+            }
+
+            .values-container,
+            .registration-cards {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .mission-content {
+                font-size: 1.15rem;
+                padding: 25px 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-section {
+                text-align: center;
+                margin-bottom: 25px;
+            }
+
+            .footer-section h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .footer-links a:hover {
+                transform: translateX(0);
+            }
+
+            .contact-info p {
+                justify-content: center;
+            }
+
+            /* Timeline mobile */
+            .timeline {
+                padding: 30px 0;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                padding-left: 60px !important;
+                padding-right: 15px !important;
+            }
+
+            .timeline-dot {
+                left: 18px !important;
+                width: 20px;
+                height: 20px;
+            }
+
+            .timeline-content {
+                padding: 20px;
+            }
+
+            .timeline-icon {
+                font-size: 1.5rem;
+                top: 15px;
+                left: 15px !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-section {
+                padding: 120px 0 50px;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .journey-title h2 {
+                font-size: 1.9rem;
+            }
+
+            .detailed-about h2 {
+                font-size: 1.8rem;
+            }
+
+            .about-text h2 {
+                font-size: 2rem;
+            }
+
+            .mission-section {
+                padding: 50px 0;
+            }
+
+            .footer {
+                padding: 40px 0 20px;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--card-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-gold);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--olive-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Header - Career button removed -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="index.html" class="logo-container">
+                    <div class="logo-text">SANAV<span>SOFTWARE</span></div>
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav>
+                    <ul id="navMenu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html" class="active">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="product.html">Product</a></li>
+                        <li><a href="training.html">Industrial Training</a></li>
+                        <li><a href="client.html">Our Client</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <!-- Career button removed -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>About SANAV SOFTWARE</h1>
+                <p>Delivering innovative IT solutions with 9+ years of excellence. We specialize in transforming businesses through cutting-edge technology and strategic digital solutions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- About Intro -->
+            <section class="about-intro" id="about-intro">
+                <div class="about-text">
+                    <h2>Who We Are</h2>
+                    <p>Since its inception, SANAV SOFTWARE has been committed to innovation, continuous learning, and delivering high-quality digital solutions. The company specializes in software development, web applications, IT consulting, and digital transformation services.</p>
+                    <p>With a strong focus on modern technologies and customer-centric implementation, SANAV SOFTWARE empowers businesses, institutions, and organizations to achieve scalable and sustainable growth through technology.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="SANAV SOFTWARE Team Collaboration">
+                </div>
+            </section>
+
+            <!-- Our Journey Section -->
+            <section class="journey-section">
+                <div class="journey-title">
+                    <h2>Our Journey</h2>
+                    <p>From humble beginnings to becoming a leading IT solutions provider, follow our journey of innovation and growth.</p>
+                </div>
+
+                <div class="timeline">
+                    <!-- Timeline Item 1 -->
+                    <div class="timeline-item" id="journey-2012">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">2012</div>
+                            <div class="timeline-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h3>The Beginning</h3>
+                            <p>Founded in Patna, Bihar with a vision to provide affordable and quality IT solutions to local businesses. Started with web development services and small software projects.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="timeline-item" id="journey-2014">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">2014</div>
+                            <div class="timeline-icon">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                            <h3>Expansion & Growth</h3>
+                            <p>Expanded our service portfolio to include custom software development, mobile applications, and IT consultancy. Established our first dedicated office space and hired additional developers.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="timeline-item" id="journey-2016">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">2016</div>
+                            <div class="timeline-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3>Industrial Training Division</h3>
+                            <p>Launched our Industrial Training division to bridge the gap between academia and industry. Started offering professional training in modern technologies to students and professionals.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 4 -->
+                    <div class="timeline-item" id="journey-2018">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">2018</div>
+                            <div class="timeline-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <h3>MSME Recognition</h3>
+                            <p>Registered as an MSME enterprise and received government recognition. This milestone helped us access new opportunities and expand our client base across multiple states.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 5 -->
+                    <div class="timeline-item" id="journey-2020">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">2020</div>
+                            <div class="timeline-icon">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <h3>Digital Transformation Focus</h3>
+                            <p>Pivoted to focus on digital transformation solutions during the pandemic. Helped numerous businesses transition to online operations and remote work solutions.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 6 -->
+                    <div class="timeline-item" id="journey-2023">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">2023</div>
+                            <div class="timeline-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>National Recognition</h3>
+                            <p>Recognized as one of the fastest-growing IT companies in Eastern India. Expanded our team to 50+ professionals and served 500+ clients across various industries.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 7 -->
+                    <div class="timeline-item" id="journey-present">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">Present</div>
+                            <div class="timeline-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <h3>Future Ready</h3>
+                            <p>Focusing on AI, Machine Learning, and Cloud Solutions. Expanding our footprint with plans to open new offices and develop innovative products for the global market.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mission Section -->
+            <section class="mission-section">
+                <div class="section-title">
+                    <h2>Our Mission & Values</h2>
+                    <p>Deliver reliable, efficient, and value-driven IT solutions with innovation and excellence</p>
+                </div>
+
+                <div class="mission-content">
+                    We are committed to providing cutting-edge technology solutions that empower businesses to thrive in the digital era through innovation, quality, and strategic growth partnerships.
+                </div>
+
+                <div class="values-container">
+                    <div class="value-card" id="value-1">
+                        <div class="value-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Innovation</h3>
+                        <p>Continuous learning and adoption of cutting-edge technologies to deliver innovative solutions that address complex business challenges and drive digital transformation.</p>
+                    </div>
+
+                    <div class="value-card" id="value-2">
+                        <div class="value-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3>Quality</h3>
+                        <p>High-quality digital solutions that exceed expectations and deliver exceptional value. We follow industry best practices and rigorous testing to ensure flawless performance.</p>
+                    </div>
+
+                    <div class="value-card" id="value-3">
+                        <div class="value-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Growth</h3>
+                        <p>Empowering businesses to achieve scalable and sustainable growth through technology. We partner with our clients to build solutions that support long-term success.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Company Registration -->
+            <section class="registration-section">
+                <div class="section-title">
+                    <h2>Company Registration</h2>
+                    <p>Our official credentials and business standing</p>
+                </div>
+
+                <div class="registration-cards">
+                    <div class="registration-card" id="reg-1">
+                        <h3>Company Type</h3>
+                        <div class="value">Private Limited / Registered</div>
+                        <p class="desc">Formally incorporated business entity</p>
+                    </div>
+
+                    <div class="registration-card" id="reg-2">
+                        <h3>Industry Experience</h3>
+                        <div class="value">9+ Years</div>
+                        <p class="desc">Since 2012</p>
+                    </div>
+
+                    <div class="registration-card" id="reg-3">
+                        <h3>Business Status</h3>
+                        <div class="value">MSME Registered</div>
+                        <span class="status">Government Verified</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Detailed About -->
+            <section class="detailed-about" id="detailed-about">
+                <h2>About Sanav Softwares Private Limited</h2>
+
+                <p>We are a leading solution provider for internet-based applications as well as windows-based applications. We employ highly qualified and experienced software development engineers, dedicated to providing total IT solutions under one roof. We can provide our clients with the security and operational development framework they require.</p>
+
+                <p>Sanav Softwares is one of the leading providers of Website Designing, Website Development and Custom Application Development in Patna. Seen as one of the top ten best fastest-growing companies providing quick and best solutions/services in the current websites market in Patna. All of your requirements will be taken into consideration and delivered to you by Sanav Softwares and that too within an affordable and very reasonable price.</p>
+
+                <p>We not only are into website Designing Patna solutions but have made some good softwares and websites which give a very innovative approach to work. If Sanav Softwares does your job, you will certainly see a marked difference in our working and final work and you will also feel your dreams finally fulfilling.</p>
+
+                <p>Our team combines technical expertise with business acumen to deliver solutions that drive real value and measurable results for our diverse client portfolio across various industries.</p>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section company-info">
+                    <div class="logo-text">SANAV SOFTWARE</div>
+                    <p>Sanav Softwares Pvt. Ltd. specializes in IT solutions, web development, software development, industrial training, and IT consultancy with 9+ years of industry experience.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Employee Login</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Our Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Web Design & Development</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Software Development</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Industrial Training</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> IT Consultancy</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Security Systems</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Birat Complex, 2nd Floor, Patna - 800001, Bihar</p>
+                        <p><i class="fas fa-phone"></i> 9386562225 | 9931044283</p>
+                        <p><i class="fas fa-envelope"></i> info@sanavsoftware.com</p>
+                        <p><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 7:00 PM</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>All rights reserved. © 2011–2026 Sanav Softwares Pvt. Ltd | Developed by Sanav Softwares Pvt Ltd</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Loading Animation
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+            }, 800);
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navMenu.classList.contains('active')
+                ? '<i class="fas fa-times"></i>'
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target) && window.innerWidth <= 768) {
+                navMenu.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navMenu.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.about-intro, .value-card, .registration-card, .detailed-about, .timeline-item').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Add staggered animation for timeline items
+        document.querySelectorAll('.timeline-item').forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.2}s`;
+        });
+
+        // Add animation delays for staggered effects
+        document.querySelectorAll('.value-card').forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.15}s`;
+        });
+
+        document.querySelectorAll('.registration-card').forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.15}s`;
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 80) {
+                header.style.background = 'rgba(13, 59, 102, 0.98)';
+                header.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.4)';
+            } else {
+                header.style.background = 'rgba(13, 59, 102, 0.95)';
+                header.style.boxShadow = '0 5px 15px var(--shadow-color)';
+            }
+        });
+
+        // Initialize animations on load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add initial animations for elements in view
+            const aboutIntro = document.getElementById('about-intro');
+            if (aboutIntro.getBoundingClientRect().top < window.innerHeight) {
+                aboutIntro.classList.add('animate');
+            }
+        });
+    </script>
+</body>
+</html>

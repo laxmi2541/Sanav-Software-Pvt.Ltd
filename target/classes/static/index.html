@@ -1,0 +1,2338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SANAV SOFTWARE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap">
+    <style>
+        :root {
+            --primary-blue: #0b2545;
+            --secondary-blue: #123a63;
+            --accent-blue: #1a4f85;
+            --accent-gold: #d4af37a9;
+            --secondary-gold: #c9a24dcc;
+            --tertiary-gold: #b8962ec1;
+            --dark-bg: #0a1929;
+            --card-bg: #132f4c;
+            --light-card: #1e3a5f;
+            --text-light: #f0f7ff;
+            --text-gray: #b0c4de;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Fixed Header Styles */
+        header {
+            background-color: rgba(13, 59, 102, 0.95);
+            padding: 12px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--accent-gold);
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* New Flexible Header Container */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Logo Container - Left Side */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+            min-width: 200px;
+        }
+
+        .logo-wrapper {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            animation: floatLogo 6s ease-in-out infinite;
+        }
+
+        @keyframes floatLogo {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at center, var(--primary-blue) 0%, var(--dark-bg) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 20px rgba(201, 168, 106, 0.5);
+        }
+
+        .logo-inner {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(240, 247, 255, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .logo-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-light);
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .logo-text span {
+            color: var(--accent-gold);
+            font-style: italic;
+        }
+
+        /* Navigation Container - Right Side */
+        nav {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            min-width: 0; /* Allows nav to shrink */
+        }
+
+        /* Updated Navigation Styles */
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 12px; /* Reduced gap */
+            flex-wrap: nowrap; /* Prevent wrapping */
+            white-space: nowrap; /* Prevent text wrapping */
+            overflow: visible; /* Allow overflow for hover effects */
+            padding: 0 5px;
+        }
+
+        nav a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem; /* Smaller font size */
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 6px 8px; /* Reduced padding */
+            display: inline-block;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-gold);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        /* Career Link Button */
+        .career-link {
+            background: linear-gradient(to right, var(--secondary-blue), var(--primary-blue));
+            color: white;
+            padding: 6px 12px; /* Reduced padding */
+            border-radius: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 15px rgba(13, 59, 102, 0.4);
+            transition: all 0.3s ease;
+            border: 1px solid var(--accent-gold);
+            font-size: 0.85rem; /* Smaller font size */
+            white-space: nowrap;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        .career-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(13, 59, 102, 0.6);
+            color: var(--accent-gold);
+        }
+
+        /* Mobile Menu Toggle (Hidden by default) */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            margin-left: 15px;
+        }
+
+        /* Hero Section with Enhanced Animations */
+        .hero {
+            padding: 150px 0 100px; /* Adjusted for smaller header */
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--primary-blue) 100%);
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(29, 79, 145, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(201, 168, 106, 0.15) 0%, transparent 50%);
+            z-index: 0;
+            animation: gradientMove 15s ease infinite alternate;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            margin-bottom: 25px;
+            color: var(--text-light);
+            line-height: 1.2;
+            text-shadow: 0 5px 15px var(--shadow-color);
+            overflow: hidden;
+        }
+
+        .welcome-text {
+            display: block;
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: slideDownText 1s ease-out 0.5s forwards;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        @keyframes slideDownText {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-highlight {
+            color: var(--accent-gold);
+            position: relative;
+            display: inline-block;
+            opacity: 0;
+            animation: typewriter 2s steps(20, end) 1s forwards;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: none;
+        }
+
+        @keyframes typewriter {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+                opacity: 1;
+            }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-gray);
+            margin-bottom: 50px;
+            line-height: 1.8;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out 2s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button {
+            background: linear-gradient(145deg, var(--secondary-blue), var(--primary-blue));
+            color: white;
+            border: 2px solid var(--accent-gold);
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow:
+                0 15px 35px rgba(13, 59, 102, 0.6),
+                0 8px 20px rgba(0, 0, 0, 0.4),
+                0 4px 10px rgba(0, 0, 0, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: popIn 0.6s ease-out 2.5s forwards;
+        }
+
+        @keyframes popIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(13, 59, 102, 0.6);
+            color: var(--accent-gold);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 100px 0;
+            background-color: var(--card-bg);
+            position: relative;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 40px 30px;
+            border-radius: 15px;
+            background-color: var(--light-card);
+            transition: all 0.4s ease;
+            flex: 1;
+            min-width: 250px;
+            border-top: 5px solid var(--accent-gold);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        .stat-item.animated {
+            animation: statAppear 0.8s ease-out forwards;
+        }
+
+        .stat-item:nth-child(1).animated { animation-delay: 0.2s; }
+        .stat-item:nth-child(2).animated { animation-delay: 0.4s; }
+        .stat-item:nth-child(3).animated { animation-delay: 0.6s; }
+
+        @keyframes statAppear {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+            display: block;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .stat-label {
+            font-size: 1.3rem;
+            color: var(--text-gray);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+
+        /* About Us Section with Enhanced Animations */
+        .about {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .section-title.animated {
+            animation: titleReveal 1s ease-out forwards;
+        }
+
+        @keyframes titleReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 6px;
+            background: linear-gradient(to right, var(--accent-gold), var(--olive-green));
+            border-radius: 3px;
+            animation: lineGrow 1s ease-out 0.5s forwards;
+            transform-origin: left;
+            transform: scaleX(0);
+        }
+
+        @keyframes lineGrow {
+            to {
+                transform: translateX(-50%) scaleX(1);
+            }
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        .about-text {
+            padding-right: 20px;
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .about-text.animated {
+            animation: slideInLeft 1s ease-out forwards;
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .about-text p {
+            color: var(--text-gray);
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .about-text.animated p {
+            animation: paragraphReveal 0.8s ease-out forwards;
+        }
+
+        .about-text.animated p:nth-child(1) { animation-delay: 0.3s; }
+        .about-text.animated p:nth-child(2) { animation-delay: 0.5s; }
+        .about-text.animated p:nth-child(3) { animation-delay: 0.7s; }
+        .about-text.animated p:nth-child(4) { animation-delay: 0.9s; }
+
+        @keyframes paragraphReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .company-name {
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            display: block;
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .company-name::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 70%;
+            background: var(--accent-gold);
+            border-radius: 3px;
+        }
+
+        /* About Image Section with Enhanced Animations */
+        .about-image-section {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        .about-image-section.animated {
+            animation: slideInRight 1s ease-out forwards;
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .main-about-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px var(--shadow-color);
+            height: 350px;
+            position: relative;
+            border: 3px solid var(--accent-gold);
+            transform: scale(0.95);
+            opacity: 0;
+        }
+
+        .about-image-section.animated .main-about-image {
+            animation: zoomIn 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes zoomIn {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .main-about-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(13, 59, 102, 0.1), rgba(201, 168, 106, 0.2));
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .main-about-image:hover::before {
+            opacity: 1;
+        }
+
+        .main-about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.7s ease;
+        }
+
+        .main-about-image:hover img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .feature-box {
+            background-color: var(--light-card);
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            border-top: 3px solid var(--accent-gold);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            transform: translateY(30px);
+            opacity: 0;
+        }
+
+        .about-image-section.animated .feature-box {
+            animation: featureReveal 0.8s ease-out forwards;
+        }
+
+        .about-image-section.animated .feature-box:nth-child(1) { animation-delay: 0.7s; }
+        .about-image-section.animated .feature-box:nth-child(2) { animation-delay: 0.9s; }
+        .about-image-section.animated .feature-box:nth-child(3) { animation-delay: 1.1s; }
+        .about-image-section.animated .feature-box:nth-child(4) { animation-delay: 1.3s; }
+
+        @keyframes featureReveal {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .feature-box:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+            display: inline-block;
+            transform: scale(0);
+        }
+
+        .feature-box.animated .feature-icon {
+            animation: iconPop 0.5s ease-out 0.3s forwards;
+        }
+
+        @keyframes iconPop {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .feature-box:hover .feature-icon {
+            animation: iconWiggle 0.5s ease;
+        }
+
+        @keyframes iconWiggle {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(-10deg);
+            }
+            75% {
+                transform: rotate(10deg);
+            }
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .feature-desc {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 120px 0;
+            background-color: var(--card-bg);
+        }
+
+        .services-intro {
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            margin-top: 20px;
+            max-width: 900px;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 70px;
+        }
+
+        .service-card {
+            background-color: var(--light-card);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border-left: 5px solid var(--accent-gold);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 30px;
+            background-color: rgba(29, 79, 145, 0.1);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            flex-shrink: 0;
+            border: 2px solid var(--accent-gold);
+        }
+
+        .service-title {
+            font-size: 1.8rem;
+            color: var(--text-light);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .service-content {
+            padding: 30px;
+        }
+
+        .service-description {
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 120px 0;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 60px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .contact-item {
+            background-color: var(--light-card);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px var(--shadow-color);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(201, 168, 106, 0.2);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .contact-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .contact-icon {
+            background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+            color: var(--accent-gold);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            border: 2px solid var(--accent-gold);
+        }
+
+        .contact-title {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .contact-details p {
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .phone-numbers {
+            margin-top: 15px;
+        }
+
+        .phone-number {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+
+        .phone-number i {
+            color: var(--accent-gold);
+        }
+
+        .contact-form {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px var(--shadow-color);
+            border-top: 5px solid var(--accent-gold);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-gray);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px 20px;
+            background-color: var(--light-card);
+            border: 2px solid #2d4a6e;
+            border-radius: 10px;
+            color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(to right, var(--secondary-blue), var(--primary-blue));
+            color: white;
+            border: 2px solid var(--accent-gold);
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 5px 15px rgba(13, 59, 102, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(13, 59, 102, 0.6);
+            color: var(--accent-gold);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--card-bg);
+            padding: 50px 0 30px;
+            border-top: 2px solid var(--accent-gold);
+            margin-top: 80px;
+            position: relative;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+            align-items: flex-start;
+        }
+
+        .footer-section {
+            padding: 0;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Playfair Display', serif;
+            line-height: 1.3;
+        }
+
+        .footer-about {
+            color: #ffffff;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0;
+            font-weight: 400;
+        }
+
+        .footer-links h3,
+        .footer-services h3,
+        .footer-contact h3 {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 15px;
+            position: relative;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .footer-links h3::after,
+        .footer-services h3::after,
+        .footer-contact h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-gold);
+            border-radius: 1px;
+        }
+
+        .footer-links ul,
+        .footer-services ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li,
+        .footer-services li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a,
+        .footer-services li {
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .footer-links a:hover,
+        .footer-services li:hover {
+            color: var(--accent-gold);
+            transform: translateX(3px);
+        }
+
+        .footer-contact p {
+            color: #ffffff;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .footer-contact p i {
+            margin-top: 1px;
+            flex-shrink: 0;
+            color: var(--accent-gold);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: flex-start;
+        }
+
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            background-color: var(--light-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent-gold);
+            font-size: 1.2rem;
+        }
+
+        .social-icon:hover {
+            background-color: var(--accent-gold);
+            color: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(201, 168, 106, 0.4);
+        }
+
+        .employee-login-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .employee-login-link:hover {
+            color: var(--accent-gold);
+        }
+
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--accent-gold), transparent);
+            margin-bottom: 25px;
+        }
+
+        .copyright {
+            text-align: center;
+            color: #ffffff;
+            padding-top: 15px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            font-weight: 400;
+        }
+
+        .developer {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        /* Floating WhatsApp Icon */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .whatsapp-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(145deg, #25D366, #128C7E);
+            border-radius: 50%;
+            text-decoration: none;
+            box-shadow:
+                0 10px 25px rgba(37, 211, 102, 0.3),
+                0 5px 15px rgba(0, 0, 0, 0.3),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            animation:
+                floatWhatsapp 6s ease-in-out infinite,
+                spinWhatsapp 20s linear infinite;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whatsapp-link::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .whatsapp-link i {
+            font-size: 2.5rem;
+            color: white;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes floatWhatsapp {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(5deg);
+            }
+        }
+
+        @keyframes spinWhatsapp {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .whatsapp-link:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow:
+                0 15px 35px rgba(37, 211, 102, 0.4),
+                0 10px 25px rgba(0, 0, 0, 0.4),
+                inset 0 2px 0 rgba(255, 255, 255, 0.4);
+            animation-play-state: paused;
+        }
+
+        .whatsapp-link:hover::before {
+            animation-play-state: paused;
+        }
+
+        /* WhatsApp Tooltip */
+        .whatsapp-float::after {
+            content: 'Chat with us on WhatsApp';
+            position: absolute;
+            right: 85px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-blue);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            border: 1px solid var(--accent-gold);
+            z-index: 1001;
+        }
+
+        .whatsapp-float::before {
+            content: '';
+            position: absolute;
+            right: 75px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 8px;
+            border-style: solid;
+            border-color: transparent transparent transparent var(--primary-blue);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 1001;
+        }
+
+        .whatsapp-float:hover::after {
+            opacity: 1;
+            visibility: visible;
+            right: 90px;
+        }
+
+        .whatsapp-float:hover::before {
+            opacity: 1;
+            visibility: visible;
+            right: 80px;
+        }
+
+        /* Floating Call Icon */
+        .call-float {
+            position: fixed;
+            bottom: 120px; /* Position above the WhatsApp button */
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .call-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(145deg, #0d3b66, #1d4f91); /* Blue gradient to match theme */
+            border-radius: 50%;
+            text-decoration: none;
+            box-shadow:
+                0 10px 25px rgba(13, 59, 102, 0.3),
+                0 5px 15px rgba(0, 0, 0, 0.3),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            animation:
+                floatCall 5s ease-in-out infinite,
+                pulseCall 2s ease-in-out infinite;
+            transition: all 0.3s ease;
+            border: 3px solid var(--accent-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .call-link::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            animation: shineCall 4s linear infinite;
+        }
+
+        @keyframes shineCall {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .call-link i {
+            font-size: 2.2rem;
+            color: white;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            animation: phoneRing 1.5s ease-in-out infinite;
+        }
+
+        @keyframes floatCall {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(-5deg);
+            }
+        }
+
+        @keyframes pulseCall {
+            0%, 100% {
+                box-shadow:
+                    0 10px 25px rgba(13, 59, 102, 0.3),
+                    0 5px 15px rgba(0, 0, 0, 0.3),
+                    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            }
+            50% {
+                box-shadow:
+                    0 10px 25px rgba(13, 59, 102, 0.5),
+                    0 5px 15px rgba(0, 0, 0, 0.3),
+                    inset 0 2px 0 rgba(255, 255, 255, 0.3),
+                    0 0 20px rgba(29, 79, 145, 0.6);
+            }
+        }
+
+        @keyframes phoneRing {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            10%, 30%, 50%, 70%, 90% {
+                transform: rotate(-10deg);
+            }
+            20%, 40%, 60%, 80% {
+                transform: rotate(10deg);
+            }
+        }
+
+        .call-link:hover {
+            transform: scale(1.1) rotate(15deg);
+            background: linear-gradient(145deg, #1d4f91, #0d3b66);
+            box-shadow:
+                0 15px 35px rgba(13, 59, 102, 0.5),
+                0 10px 25px rgba(0, 0, 0, 0.4),
+                inset 0 2px 0 rgba(255, 255, 255, 0.4);
+            animation-play-state: paused;
+        }
+
+        .call-link:hover::before {
+            animation-play-state: paused;
+        }
+
+        .call-link:hover i {
+            animation-play-state: paused;
+        }
+
+        /* Call Tooltip */
+        .call-float::after {
+            content: 'Call us now';
+            position: absolute;
+            right: 85px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-blue);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            border: 1px solid var(--accent-gold);
+            z-index: 1001;
+        }
+
+        .call-float::before {
+            content: '';
+            position: absolute;
+            right: 75px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 8px;
+            border-style: solid;
+            border-color: transparent transparent transparent var(--primary-blue);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 1001;
+        }
+
+        .call-float:hover::after {
+            opacity: 1;
+            visibility: visible;
+            right: 90px;
+        }
+
+        .call-float:hover::before {
+            opacity: 1;
+            visibility: visible;
+            right: 80px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .about-container, .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-text {
+                padding-right: 0;
+            }
+
+            .about-image-section {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 150px 0 80px;
+            }
+
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+
+            .stat-item {
+                min-width: 100%;
+            }
+
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 130px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2.3rem;
+            }
+
+            .services-container {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 30px;
+            }
+
+            /* Responsive WhatsApp Icon */
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .whatsapp-link {
+                width: 60px;
+                height: 60px;
+            }
+
+            .whatsapp-link i {
+                font-size: 2rem;
+            }
+
+            .whatsapp-float::after {
+                content: 'WhatsApp';
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                right: 75px;
+            }
+
+            .whatsapp-float:hover::after {
+                right: 80px;
+            }
+
+            .whatsapp-float::before {
+                right: 65px;
+            }
+
+            .whatsapp-float:hover::before {
+                right: 70px;
+            }
+
+            /* Responsive Call Icon */
+            .call-float {
+                bottom: 100px;
+                right: 20px;
+            }
+
+            .call-link {
+                width: 60px;
+                height: 60px;
+            }
+
+            .call-link i {
+                font-size: 1.8rem;
+            }
+
+            .call-float::after {
+                content: 'Call us';
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                right: 75px;
+            }
+
+            .call-float:hover::after {
+                right: 80px;
+            }
+
+            .call-float::before {
+                right: 65px;
+            }
+
+            .call-float:hover::before {
+                right: 70px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            nav ul {
+                gap: 15px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .cta-button {
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+
+            .stat-number {
+                font-size: 3.2rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            .footer-links ul,
+            .footer-services ul {
+                justify-content: center;
+            }
+
+            .footer-links a,
+            .footer-services li {
+                justify-content: center;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+
+            .copyright {
+                text-align: center;
+                font-size: 0.8rem;
+            }
+
+            /* Mobile WhatsApp Icon */
+            .whatsapp-float {
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .whatsapp-link {
+                width: 55px;
+                height: 55px;
+            }
+
+            .whatsapp-link i {
+                font-size: 1.8rem;
+            }
+
+            /* Mobile Call Icon */
+            .call-float {
+                bottom: 85px;
+                right: 15px;
+            }
+
+            .call-link {
+                width: 55px;
+                height: 55px;
+            }
+
+            .call-link i {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--card-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-gold);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--olive-green);
+        }
+
+        /* Traditional Pattern Background */
+        .traditional-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(201, 168, 106, 0.03) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, rgba(138, 154, 91, 0.03) 2px, transparent 2px);
+            background-size: 50px 50px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--accent-gold);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* For larger screens, ensure proper spacing */
+        @media (min-width: 769px) {
+            .call-float {
+                bottom: 120px;
+                right: 30px;
+            }
+
+            .whatsapp-float {
+                bottom: 30px;
+                right: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="traditional-pattern"></div>
+        <div class="container header-container">
+            <div class="logo-container">
+                <div class="logo-wrapper">
+                    <div class="logo-circle">
+                        <div class="logo-inner">
+                            <img src="images/sanav logo.jpeg" alt="SANAV SOFTWARE Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="logo-text">SANAV <span>SOFTWARE</span></div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="About.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="product.html">Product</a></li>
+                    <li><a href="Training.html">Industrial Training</a></li>
+                    <li><a href="client.html">Our Client</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section with Floating Shapes -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="traditional-pattern"></div>
+        <div class="floating-shapes" id="floatingShapes"></div>
+        <div class="container hero-content">
+            <h1>
+                <span class="welcome-text">Welcome to</span>
+                <span class="hero-highlight">SANAV SOFTWARE</span>
+            </h1>
+            <p>Delivering innovative digital solutions, software development, and IT consulting services that drive growth and digital transformation.</p>
+            <button class="cta-button">
+                <i class="fas fa-rocket"></i>
+                Get Started
+            </button>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="traditional-pattern"></div>
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <span class="stat-number">9+</span>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <div class="stat-label">Team Members</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100+</span>
+                    <div class="stat-label">Projects Delivered</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about" id="about">
+        <div class="traditional-pattern"></div>
+        <div class="container">
+            <h2 class="section-title">ABOUT US</h2>
+            <div class="about-container">
+                <div class="about-text">
+                    <p><span class="company-name">SANAV SOFTWARES PVT. LTD.</span></p>
+                    <p>Sanav Softwares Pvt. Ltd. is a leading solution provider for the internet based applications as well as windows based applications. We employ highly qualified and experienced software development engineers, dedicated to provide total IT solutions under one roof. We can provide our clients with the security and operational development framework they require.</p>
+                    <p>Sanav Softwares is one of the leading providers of Website Designing, Website Development and Custom Application Development in Patna. Seen as one the top ten best fastest growing companies providing quick and best solutions/services in current websites market in Patna. All of your requirements will be taken into consideration and delivered to you by Sanav Softwares and that too within affordable and very reasonable price.</p>
+                    <p>Sanav Softwares not only is into website Designing Patna solutions but has made some good softwares and websites which gives a very innovative approach to work. If Sanav Softwares does your job, you will certainly see a marked difference in our working and final work and you will also feel your dreams finally fulfilling.</p>
+                </div>
+
+                <div class="about-image-section">
+                    <div class="main-about-image">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="SANAV SOFTWARE Office">
+                    </div>
+
+                    <div class="about-features">
+                        <div class="feature-box">
+                            <div class="feature-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <h3 class="feature-title">Quality First</h3>
+                            <p class="feature-desc">We prioritize quality in every project, ensuring client satisfaction.</p>
+                        </div>
+
+                        <div class="feature-box">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3 class="feature-title">Expert Team</h3>
+                            <p class="feature-desc">Our team of experts delivers innovative solutions for your business.</p>
+                        </div>
+
+                        <div class="feature-box">
+                            <div class="feature-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <h3 class="feature-title">Client-Centric</h3>
+                            <p class="feature-desc">We build lasting relationships through excellent customer service.</p>
+                        </div>
+
+                        <div class="feature-box">
+                            <div class="feature-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h3 class="feature-title">Innovation</h3>
+                            <p class="feature-desc">Constantly evolving with the latest technologies and trends.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="traditional-pattern"></div>
+        <div class="container">
+            <h2 class="section-title fade-in">OUR SERVICES</h2>
+            <div class="services-intro fade-in">
+                <p>We at Sanav Softwares, help in improving customer service and help retain customers. We increase productivity and efficiency to provide access to Domestic and International Market. We lead to overall cost reduction and better financial Management to help companies reach new Markets.</p>
+                <p style="margin-top: 15px;">Sanav Softwares is website design and development company built upon a foundation of passion, creativity and vision.</p>
+                <p style="margin-top: 15px; font-weight: 600; color: var(--accent-gold);">We provide total quality and innovative solutions in the following domains of expertise:</p>
+            </div>
+
+            <div class="services-container">
+                <div class="service-card fade-in">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="service-title">Web Development</h3>
+                    </div>
+                    <div class="service-content">
+                        <p class="service-description">Website Designing & Development. Web design companies help you to advertise your online presence in the best and presentable manner. We create responsive, user-friendly websites that deliver exceptional user experience and drive business growth.</p>
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="service-title">Industrial Training</h3>
+                    </div>
+                    <div class="service-content">
+                        <p class="service-description">Winter / Summer Industrial Training is important in career of students in Engineering Stream. We provide hands-on training in latest technologies, preparing students for real-world challenges and enhancing their employability in the competitive IT industry.</p>
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3 class="service-title">Software Development</h3>
+                    </div>
+                    <div class="service-content">
+                        <p class="service-description">The Software solutions are custom made to suit your business needs and processes and offer the blend of latest technology with innovation. We develop scalable, secure, and efficient software applications that streamline operations and boost productivity.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="traditional-pattern"></div>
+        <div class="container">
+            <h2 class="section-title fade-in">Contact Us At</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item fade-in">
+                        <div class="contact-header">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h3 class="contact-title">Locate us At</h3>
+                        </div>
+                        <div class="contact-details">
+                            <p>Birat Complex, 2nd Floor,</p>
+                            <p>Near Krishna Apartment,</p>
+                            <p>Boring Road,</p>
+                            <p>Patna - 800001</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item fade-in">
+                        <div class="contact-header">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <h3 class="contact-title">Call Us at</h3>
+                        </div>
+                        <div class="contact-details">
+                            <div class="phone-numbers">
+                                <div class="phone-number">
+                                    <i class="fas fa-phone"></i>
+                                    <span>9386582225</span>
+                                </div>
+                                <div class="phone-number">
+                                    <i class="fas fa-phone"></i>
+                                    <span>9931044283</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form fade-in">
+                    <h3 class="form-title">Feel Free to write us</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Enter Your Name</label>
+                            <input type="text" id="name" class="form-control" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Enter Your Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="Your email address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Write your message</label>
+                            <textarea id="message" class="form-control" placeholder="Your message here..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="traditional-pattern"></div>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h3 style="color: var(--accent-gold); font-size: 1.8rem;">Sanav Software</h3>
+                    <p class="footer-about">Sanav Softwares Pvt. Ltd. specializes in IT solutions, web development, software development, industrial training, and IT consultancy.</p>
+                </div>
+
+                <div class="footer-section footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Services</a></li>
+                        <li><a href="#training"><i class="fas fa-chevron-right"></i> Industrial Training</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section footer-services">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> Web Design & Development</li>
+                        <li><i class="fas fa-chevron-right"></i> Software Development</li>
+                        <li><i class="fas fa-chevron-right"></i> Industrial Training</li>
+                        <li><i class="fas fa-chevron-right"></i> IT Consultancy</li>
+                        <li><i class="fas fa-chevron-right"></i> Security Systems</li>
+                    </ul>
+                </div>
+
+                <div class="footer-section footer-contact">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Birat Complex, 2nd Floor, Patna – 800001</p>
+                    <p><i class="fas fa-phone"></i> 9386582225 | 9931044283</p>
+                    <p><i class="fas fa-envelope"></i> info@sanavsoftware.com</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="copyright">
+                All rights reserved. © 2011-<span id="currentYear"></span> Sanav Softwares Pvt. Ltd | <span class="developer">Developed by Sanav Softwares Pvt Ltd</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Call Icon -->
+    <div class="call-float">
+        <a href="tel:+919386582225" class="call-link">
+            <i class="fas fa-phone-alt"></i>
+        </a>
+    </div>
+
+    <!-- Floating WhatsApp Icon -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/919386582225?text=Hello%20SANAV%20SOFTWARE%20Team" target="_blank" class="whatsapp-link">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <script>
+        // Remove loading screen after page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loading').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
+
+        // Create floating shapes
+        const shapesContainer = document.getElementById('floatingShapes');
+        const shapes = ['circle', 'triangle', 'square'];
+
+        for (let i = 0; i < 15; i++) {
+            const shape = document.createElement('div');
+            shape.className = `shape ${shapes[Math.floor(Math.random() * shapes.length)]}`;
+
+            // Random position
+            shape.style.left = `${Math.random() * 100}%`;
+            shape.style.top = `${Math.random() * 100}%`;
+
+            // Random size
+            const size = Math.random() * 20 + 10;
+            if (shape.classList.contains('circle')) {
+                shape.style.width = `${size}px`;
+                shape.style.height = `${size}px`;
+            } else if (shape.classList.contains('triangle')) {
+                shape.style.borderLeftWidth = `${size/2}px`;
+                shape.style.borderRightWidth = `${size/2}px`;
+                shape.style.borderBottomWidth = `${size * 0.85}px`;
+            } else if (shape.classList.contains('square')) {
+                shape.style.width = `${size}px`;
+                shape.style.height = `${size}px`;
+            }
+
+            // Random animation duration
+            const duration = Math.random() * 30 + 20;
+            shape.style.animationDuration = `${duration}s`;
+            shape.style.animationDelay = `${Math.random() * 5}s`;
+
+            // Random opacity
+            shape.style.opacity = Math.random() * 0.1 + 0.05;
+
+            shapesContainer.appendChild(shape);
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('section-title')) {
+                        entry.target.classList.add('animated');
+                    }
+                    if (entry.target.classList.contains('stat-item')) {
+                        entry.target.classList.add('animated');
+                    }
+                    if (entry.target.classList.contains('about-text')) {
+                        entry.target.classList.add('animated');
+                    }
+                    if (entry.target.classList.contains('about-image-section')) {
+                        entry.target.classList.add('animated');
+                    }
+                    if (entry.target.classList.contains('feature-box')) {
+                        entry.target.classList.add('animated');
+                    }
+                    if (entry.target.classList.contains('fade-in')) {
+                        entry.target.classList.add('visible');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+        document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+        document.querySelectorAll('.about-text').forEach(el => observer.observe(el));
+        document.querySelectorAll('.about-image-section').forEach(el => observer.observe(el));
+        document.querySelectorAll('.feature-box').forEach(el => observer.observe(el));
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a, .footer-links a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = href.substring(1);
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+
+                        document.querySelectorAll('nav a').forEach(link => {
+                            link.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Contact form submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            const successMessage = document.createElement('div');
+            successMessage.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(to right, var(--olive-green), #6b7c46);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                z-index: 2000;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                animation: slideIn 0.5s ease;
+                border: 1px solid var(--accent-gold);
+            `;
+
+            successMessage.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <strong>Thank you ${name}!</strong><br>
+                    Your message has been sent successfully.
+                </div>
+            `;
+
+            document.body.appendChild(successMessage);
+
+            setTimeout(() => {
+                successMessage.style.animation = 'slideOut 0.5s ease';
+                setTimeout(() => {
+                    if (successMessage.parentNode) {
+                        document.body.removeChild(successMessage);
+                    }
+                }, 500);
+            }, 5000);
+
+            contactForm.reset();
+        });
+
+        // Get Started button functionality
+        const getStartedBtn = document.querySelector('.cta-button');
+        getStartedBtn.addEventListener('click', function() {
+            document.getElementById('contact').scrollIntoView({
+                behavior: 'smooth'
+            });
+            setTimeout(() => {
+                document.getElementById('name').focus();
+            }, 800);
+        });
+
+        // Update copyright year
+        const currentYear = new Date().getFullYear();
+        document.getElementById('currentYear').textContent = currentYear;
+
+        // WhatsApp animation enhancement
+        const whatsappIcon = document.querySelector('.whatsapp-link');
+        if (whatsappIcon) {
+            // Add pulsing effect
+            setInterval(() => {
+                whatsappIcon.style.boxShadow =
+                    `0 10px 25px rgba(37, 211, 102, 0.3),
+                     0 5px 15px rgba(0, 0, 0, 0.3),
+                     inset 0 2px 0 rgba(255, 255, 255, 0.3),
+                     0 0 20px rgba(37, 211, 102, 0.5)`;
+
+                setTimeout(() => {
+                    whatsappIcon.style.boxShadow =
+                        `0 10px 25px rgba(37, 211, 102, 0.3),
+                         0 5px 15px rgba(0, 0, 0, 0.3),
+                         inset 0 2px 0 rgba(255, 255, 255, 0.3)`;
+                }, 1000);
+            }, 3000);
+        }
+
+        // Call button animation enhancement
+        const callIcon = document.querySelector('.call-link');
+        if (callIcon) {
+            // Add additional pulsing effect
+            setInterval(() => {
+                callIcon.style.boxShadow =
+                    `0 10px 25px rgba(13, 59, 102, 0.4),
+                     0 5px 15px rgba(0, 0, 0, 0.3),
+                     inset 0 2px 0 rgba(255, 255, 255, 0.3),
+                     0 0 25px rgba(29, 79, 145, 0.6)`;
+
+                setTimeout(() => {
+                    callIcon.style.boxShadow =
+                        `0 10px 25px rgba(13, 59, 102, 0.3),
+                         0 5px 15px rgba(0, 0, 0, 0.3),
+                         inset 0 2px 0 rgba(255, 255, 255, 0.3)`;
+                }, 800);
+            }, 4000);
+        }
+
+        // Add CSS for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+            @keyframes fadeInLeft {
+                from {
+                    opacity: 0;
+                    transform: translateX(-30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

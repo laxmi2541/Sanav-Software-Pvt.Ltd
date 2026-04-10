@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | SANAV SOFTWARE</title>
+    <link rel="stylesheet" href="font-awesome/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0d3b66;
+            --secondary-blue: #1d4f91;
+            --accent-gold: #c9a86a;
+            --dark-bg: #0a1929;
+            --card-bg: #132f4c;
+            --text-light: #f0f7ff;
+            --text-gray: #b0c4de;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--card-bg);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-gold);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--accent-gold);
+        }
+
+        /* DASHBOARD CONTENT */
+        .container {
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h2 i {
+            color: var(--accent-gold);
+        }
+
+        /* MESSAGES TABLE */
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(201,168,106,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-light);
+            text-align: left;
+        }
+
+        th {
+            background: rgba(201, 168, 106, 0.1);
+            color: var(--accent-gold);
+            padding: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--accent-gold);
+        }
+
+        td {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.95rem;
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .message-cell {
+            max-width: 400px;
+            line-height: 1.5;
+            color: var(--text-gray);
+        }
+
+        .date-cell {
+            white-space: nowrap;
+            color: var(--accent-gold);
+            font-weight: 500;
+        }
+
+        /* LOADING STATE */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2rem;
+            color: var(--text-gray);
+        }
+
+        .error {
+            text-align: center;
+            padding: 50px;
+            color: #ff6b6b;
+        }
+
+        .logout-btn {
+            background: var(--accent-gold);
+            color: var(--dark-bg);
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(201,168,106,0.4);
+        }
+
+        @media (max-width: 992px) {
+            .container { padding: 20px; }
+            td, th { padding: 12px; }
+            .message-cell { max-width: 250px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">SANAV <span>ADMIN</span></div>
+        <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </header>
+
+    <div class="container">
+        <h2><i class="fas fa-envelope-open-text"></i> Contact Submissions</h2>
+
+        <div class="table-container">
+            <table id="messagesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Message</th>
+                        <th>Date Received</th>
+                    </tr>
+                </thead>
+                <tbody id="messagesBody">
+                    <tr>
+                        <td colspan="5" class="loading">Fetching messages...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        async function fetchMessages() {
+            const body = document.getElementById('messagesBody');
+            
+            try {
+                // Fetch all data from the /auth/all endpoint
+                const response = await fetch('/api/auth/all');
+                
+                if (!response.ok) {
+                    throw new Error('Could not retrieve data.');
+                }
+                
+                const users = await response.json();
+                
+                if (users.length === 0) {
+                    body.innerHTML = '<tr><td colspan="5" class="loading">No data found.</td></tr>';
+                    return;
+                }
+                
+                body.innerHTML = '';
+                users.forEach(u => {
+                    const row = document.createElement('tr');
+                    
+                    row.innerHTML = `
+                        <td>${u.id}</td>
+                        <td style="font-weight: 600;">${u.name}</td>
+                        <td>${u.email}</td>
+                        <td class="message-cell">${u.password}</td>
+                        <td class="date-cell">Stored Locally</td>
+                    `;
+                    body.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                body.innerHTML = `<tr><td colspan="5" class="error"><i class="fas fa-exclamation-triangle"></i> Error: ${error.message}</td></tr>`;
+            }
+        }
+
+        // On Load
+        window.addEventListener('DOMContentLoaded', fetchMessages);
+    </script>
+</body>
+</html>
+
+
