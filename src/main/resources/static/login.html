@@ -93,6 +93,39 @@
             color: var(--accent-gold);
             text-decoration: none;
         }
+
+        .server-status {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff4d4d;
+        }
+
+        .status-dot.online {
+            background: #4caf50;
+            box-shadow: 0 0 10px #4caf50;
+        }
+
+        .status-text {
+            color: #aaa;
+        }
+
+        .status-text.online {
+            color: #4caf50;
+        }
     </style>
 </head>
 <body>
@@ -112,11 +145,54 @@
         <div class="links">
             <p>Back to <a href="index.html">Home</a></p>
         </div>
+        <div class="server-status" id="serverStatus">
+            <div class="status-dot" id="statusDot"></div>
+            <span class="status-text" id="statusText">Checking Backend...</span>
+        </div>
     </div>
 
     <script>
         const loginForm = document.getElementById('loginForm');
         const loginBtn = document.getElementById('loginBtn');
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+
+        // IMPROVED BASE URL LOGIC
+        const getBaseUrl = () => {
+            const host = window.location.hostname === 'localhost' ? '127.0.0.1' : (window.location.hostname || '127.0.0.1');
+            return `http://${host}:8080/api`;
+        };
+
+        // Function to check backend health
+        async function checkServerStatus() {
+            const baseUrl = getBaseUrl();
+            try {
+                const response = await fetch(`${baseUrl}/home`, { method: 'GET', mode: 'cors' });
+                if (response.ok || response.status === 401 || response.status === 403) {
+                    statusDot.classList.add('online');
+                    statusText.classList.add('online');
+                    statusText.innerText = 'Backend Online (Port 8080)';
+                    return true;
+                }
+            } catch (err) {
+                try {
+                    const fallbackResponse = await fetch(`http://localhost:8080/api/home`, { method: 'GET', mode: 'cors' });
+                    if (fallbackResponse.ok || fallbackResponse.status === 401) {
+                         statusDot.classList.add('online');
+                         statusText.classList.add('online');
+                         statusText.innerText = 'Backend Online (Localhost)';
+                         return true;
+                    }
+                } catch (e) {}
+            }
+            statusDot.classList.remove('online');
+            statusText.classList.remove('online');
+            statusText.innerText = 'Backend Offline (Check Port 8080)';
+            return false;
+        }
+
+        checkServerStatus();
+        setInterval(checkServerStatus, 5000);
 
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -127,25 +203,63 @@
             loginBtn.innerText = 'Verifying...';
             loginBtn.disabled = true;
 
-            try {
-                const response = await fetch('/api/auth/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
-                });
+            const urlsToTry = [
+                `${getBaseUrl()}/auth/admin-login`,
+                `http://127.0.0.1:8080/api/auth/admin-login`,
+                `http://localhost:8080/api/auth/admin-login`
+            ];
 
-                const result = await response.json();
+            let lastError = null;
+            let success = false;
 
-                if (response.ok && result.success) {
-                    alert('Login successful!');
-                    window.location.href = 'admin.html';
-                } else {
-                    alert('Error: ' + result.message);
+            for (const url of urlsToTry) {
+                try {
+                    console.log("Attempting login via:", url);
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const result = await response.json();
+                    
+                    if (response.ok && result.success) {
+                        const loginData = result.data;
+                        localStorage.setItem('token', loginData.token);
+                        localStorage.setItem('user', JSON.stringify(loginData.user));
+                        localStorage.setItem('adminName', loginData.user.name || 'Admin');
+                        localStorage.setItem('adminEmail', loginData.user.email);
+                        
+                        success = true;
+                        alert('Login successful! Redirecting to admin dashboard...');
+                        window.location.href = 'admin.html';
+                        break;
+                    } else {
+                        throw new Error(result.message || 'Invalid credentials');
+                    }
+                } catch (error) {
+                    console.error(`Failed attempt for ${url}:`, error.message);
+                    lastError = error;
+                    if (error.message !== 'Failed to fetch' && !error.message.includes('network')) {
+                        break;
+                    }
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Server connection failed.');
-            } finally {
+            }
+
+            if (!success) {
+                let errorMsg = 'Login Failed!';
+                if (lastError.message === 'Failed to fetch' || lastError.message.includes('NetworkError')) {
+                    errorMsg = "Multiple connection attempts failed.\n\n" +
+                               "1. Verify Spring Boot is RUNNING on port 8080\n" +
+                               "2. Verify MySQL database is active\n" +
+                               "3. Check for CORS blocks in browser console";
+                } else {
+                    errorMsg = lastError.message;
+                }
+                alert(errorMsg);
                 loginBtn.innerText = 'Login Now';
                 loginBtn.disabled = false;
             }

@@ -22,22 +22,27 @@ public class AdminSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Ensure at least one admin exists
-        String adminEmail = "admin@sanav.com";
-        Optional<User> adminOptional = userRepository.findByEmail(adminEmail);
+        // Main Admin account
+        createAdminIfMissing("admin@sanav.com", "Laxmi Admin", "Admin@123");
+        
+        // Personal Admin account (as seen in user screenshot)
+        createAdminIfMissing("mylaxmi@gmail.com", "Laxmi Personal", "Admin@123");
+    }
 
+    private void createAdminIfMissing(String email, String name, String password) {
+        Optional<User> adminOptional = userRepository.findByEmail(email);
         if (adminOptional.isEmpty()) {
             User admin = User.builder()
-                    .name("Laxmi Admin")
-                    .email(adminEmail)
-                    .password(passwordEncoder.encode("Admin@123"))
+                    .name(name)
+                    .email(email)
+                    .password(passwordEncoder.encode(password))
                     .role(Role.ADMIN)
                     .status(Status.ACTIVE)
                     .build();
             userRepository.save(admin);
-            System.out.println(">>> SEEDER: Created default admin: " + adminEmail + " / Admin@123");
+            System.out.println(">>> SEEDER: Created admin: " + email + " / " + password);
         } else {
-            System.out.println(">>> SEEDER: Admin account already exists.");
+            System.out.println(">>> SEEDER: Admin account already exists: " + email);
         }
     }
 }

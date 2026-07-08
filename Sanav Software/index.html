@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -206,6 +206,67 @@
 
         nav a:hover::after, nav a.active::after {
             width: 100%;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--card-bg);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            z-index: 1001;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--accent-gold);
+            top: 100%;
+            left: 0;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: var(--text-gray);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(201, 168, 106, 0.1);
+            position: relative;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(29, 79, 145, 0.3);
+            color: var(--accent-gold);
+            padding-left: 20px;
+        }
+
+        .dropdown i.fa-chevron-down {
+            font-size: 0.7rem;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover i.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Career Link Button */
@@ -1788,12 +1849,19 @@
                 <ul>
                     <li><a href="index.html" class="active">Home</a></li>
                     <li><a href="About.html">About Us</a></li>
-                    <li><a href="services.html">Services</a></li>
+                    <li class="dropdown">
+                        <a href="services.html">Services <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="services.html#web-development"><i class="fas fa-laptop-code"></i> Web Development</a>
+                            <a href="services.html#software-development"><i class="fas fa-cogs"></i> Software Development</a>
+                            <a href="Training.html"><i class="fas fa-graduation-cap"></i> Industrial Training</a>
+                        </div>
+                    </li>
                     <li><a href="product.html">Product</a></li>
                     <li><a href="Training.html">Industrial Training</a></li>
                     <li><a href="client.html">Our Client</a></li>
                     <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="login.html">Login</a></li>
+                    <li><a href="admin-login.html"><i class="fas fa-user-shield"></i> Admin Login</a></li>
                 </ul>
             </nav>
         </div>
@@ -2198,6 +2266,10 @@
             });
         });
 
+        // Dynamic API Configuration
+        const API_HOST = window.location.hostname === '127.0.0.1' ? '127.0.0.1' : 'localhost';
+        const API_BASE_URL = `http://${API_HOST}:8080/api`;
+
         // Contact form submission
         const contactForm = document.getElementById('contactForm');
         contactForm.addEventListener('submit', async function(e) {
@@ -2214,8 +2286,7 @@
             submitBtn.disabled = true;
 
             try {
-                // Requirement 4 & 13: Real backend connection
-                const response = await fetch('http://localhost:8080/api/contact', {
+                const response = await fetch(`${API_BASE_URL}/contact`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, email, subject, message })

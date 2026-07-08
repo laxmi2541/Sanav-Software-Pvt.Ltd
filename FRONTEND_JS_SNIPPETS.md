@@ -6,7 +6,7 @@ Add these snippets to your HTML files to connect them to the Spring Boot backend
 Add this at the top of your scripts to handle the base URL and authentication.
 
 ```javascript
-const API_BASE_URL = "http://localhost:8081/api";
+const API_BASE_URL = "http://localhost:8080/api";
 
 // Helper to get headers with JWT token if available
 function getHeaders() {

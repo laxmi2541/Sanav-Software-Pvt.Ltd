@@ -32,8 +32,10 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Status status;
+    private Status status = Status.ACTIVE;
 
     @Column(name = "last_login")
     private LocalDateTime lastLogin;

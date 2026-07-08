@@ -5,7 +5,7 @@ Paste these snippets into your `<script>` tags on the respective pages.
 ## 1. Global Setup (Utility)
 Ensure you have a way to handle the API URL:
 ```javascript
-const API_BASE_URL = "http://localhost:8081/api";
+const API_BASE_URL = "http://localhost:8080/api";
 
 function getHeaders() {
     const token = localStorage.getItem("token");

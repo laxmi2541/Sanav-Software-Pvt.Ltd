@@ -157,7 +157,10 @@
 <body>
     <header class="header">
         <div class="logo">SANAV <span>ADMIN</span></div>
-        <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <div class="user-info" style="display: flex; align-items: center; gap: 20px;">
+            <span id="adminNameDisplay" style="color: var(--text-gray); font-size: 0.9rem;"></span>
+            <a href="#" id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
     </header>
 
     <div class="container">
@@ -169,7 +172,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Email</th>
+                        <th>Email / Subject</th>
                         <th>Message</th>
                         <th>Date Received</th>
                     </tr>
@@ -184,34 +187,74 @@
     </div>
 
     <script>
+        // AUTHENTICATION CHECK
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert("No active session found. Please log in.");
+            window.location.href = 'login.html';
+        }
+
+        // SET ADMIN NAME
+        const adminName = localStorage.getItem('adminName');
+        if (adminName) {
+            document.getElementById('adminNameDisplay').innerText = `Hello, ${adminName}`;
+        }
+
+        // LOGOUT LOGIC
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.clear();
+            window.location.href = 'login.html';
+        });
+
         async function fetchMessages() {
             const body = document.getElementById('messagesBody');
             
             try {
-                // Fetch all data from the /auth/all endpoint
-                const response = await fetch('/api/auth/all');
+                // DYNAMIC HOST DETECTION
+                const API_HOST = window.location.hostname === '127.0.0.1' ? '127.0.0.1' : 'localhost';
+                const API_BASE_URL = `http://${API_HOST}:8080/api`;
                 
+                const response = await fetch(`${API_BASE_URL}/messages`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.status === 401 || response.status === 403) {
+                    alert("Session expired or access denied.");
+                    localStorage.clear();
+                    window.location.href = 'login.html';
+                    return;
+                }
+
                 if (!response.ok) {
-                    throw new Error('Could not retrieve data.');
+                    throw new Error('Could not retrieve data from server.');
                 }
                 
-                const users = await response.json();
+                const result = await response.json();
+                const messages = result.data.content || result.data; // Handle both paged and unpaged responses
                 
-                if (users.length === 0) {
-                    body.innerHTML = '<tr><td colspan="5" class="loading">No data found.</td></tr>';
+                if (!messages || messages.length === 0) {
+                    body.innerHTML = '<tr><td colspan="5" class="loading">No messages found.</td></tr>';
                     return;
                 }
                 
                 body.innerHTML = '';
-                users.forEach(u => {
+                messages.forEach(m => {
                     const row = document.createElement('tr');
+                    const date = m.createdAt ? new Date(m.createdAt).toLocaleString() : 'N/A';
                     
                     row.innerHTML = `
-                        <td>${u.id}</td>
-                        <td style="font-weight: 600;">${u.name}</td>
-                        <td>${u.email}</td>
-                        <td class="message-cell">${u.password}</td>
-                        <td class="date-cell">Stored Locally</td>
+                        <td>${m.id}</td>
+                        <td style="font-weight: 600;">${m.name}</td>
+                        <td>
+                            <div style="color: var(--accent-gold); font-weight: 500;">${m.email}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-gray);">${m.subject}</div>
+                        </td>
+                        <td class="message-cell">${m.message}</td>
+                        <td class="date-cell">${date}</td>
                     `;
                     body.appendChild(row);
                 });
